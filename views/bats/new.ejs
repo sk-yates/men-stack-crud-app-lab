@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New bat entry</title>
+</head>
+
+<body>
+    <h1>Create a New entry for a new bat!</h1>
+    <form action="/bats" method="POST">
+
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" />
+        </div>
+
+        <div>
+            <label for="description">Description: </label>
+            <textarea type="text" name="description" id="description"></textarea>
+        </div>
+        <div>
+            <label for="isLivingInTheCave">Is this species currently in the cave?</label>
+            <input type="checkbox" name="isLivingInTheCave" id="isLivingInTheCave" />
+        </div>
+
+
+        <button type="submit">Add a bat!</button>
+</body>
+
+</html>
