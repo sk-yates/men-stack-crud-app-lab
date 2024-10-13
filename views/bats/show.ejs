@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= bat.name %></title>
+</head>
+<body>
+    <h1> <%= bat.name %> </h1>
+    
+    <div>
+        <%= bat.description %>
+    </div>
+
+    <div>
+    <% if (bat.isInTheCave) { %>
+        <p>This bat can be found in El Volcán de los Murciélagos!</p>
+      <% } else { %>
+        <p>This bat hasn't been found in El Volcán de los Murciélagos.</p>
+      <% } %>
+    </div>
+
+    <form action="/bats/<%= bat._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete <%= bat.name %> </button>
+    </form>
+
+    <a href="/bats/<%= bat._id %>/edit"> Edit <%= bat.name %> </a>
+
+    <a href= "/bats/"> Back to Bat Index </a>
+</body>
+</html>

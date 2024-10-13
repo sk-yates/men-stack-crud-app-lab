@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New bat entry</title>
+    <title>New-Bat: Create entry</title>
 </head>
 
 <body>
-    <h1>Create a New entry for a new bat!</h1>
+    <h1>Create a new entry for a new bat!</h1>
     <form action="/bats" method="POST">
 
         <div>
@@ -20,13 +20,15 @@
             <label for="description">Description: </label>
             <textarea type="text" name="description" id="description"></textarea>
         </div>
+        
         <div>
-            <label for="isLivingInTheCave">Is this species currently in the cave?</label>
-            <input type="checkbox" name="isLivingInTheCave" id="isLivingInTheCave" />
+            <label for="'isInTheCave">Is this species currently in El Volcán de los Murciélagos?</label>
+            <input type="checkbox" name="isInTheCave" id="isInTheCave" />
         </div>
 
 
         <button type="submit">Add a bat!</button>
+        <a href="/bats">Back to Bats Index</a>
 </body>
 
 </html>

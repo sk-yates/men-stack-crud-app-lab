@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New-Bat: Create entry</title>
+</head>
+
+<body>
+    <h1>Update the entry for <%= bat.name %></h1>
+    <form action="/bats/<%= bat._id%>?_method=PUT" method="POST">
+
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" value="<%= bat.name %>"/>
+        </div>
+
+        <div>
+            <label for="description">Description: </label>
+            <textarea type="text" name="description" id="description"> <%= bat.description %> </textarea>
+        </div>
+        
+        <div>
+            <label for="isInTheCave">Is this species currently in El Volcán de los Murciélagos?</label>
+            <input type="checkbox" name="isInTheCave" id="isInTheCave" <% if (bat.isInTheCave) { %> checked <% } %> />
+        </div>
+
+
+        <button type="submit">Update <%= bat.name %></button>
+        <a href="/bats">Back to Bats Index</a>
+</body>
+
+</html>

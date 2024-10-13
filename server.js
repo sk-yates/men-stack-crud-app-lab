@@ -1,3 +1,5 @@
+// ============================================ Dependencies ============================================
+
 // We begin by loading Express
 const express = require("express");
 
@@ -6,6 +8,8 @@ dotenv.config();
 
 const mongoose = require('mongoose')
 
+const methodOverride = require("method-override");
+const morgan = require("morgan");
 
 const app = express();
 
@@ -14,46 +18,53 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-const Bats = require("./models/bats.js");
+const Bat = require("./models/bat.js");
+const BatsCtrl = require("./controllers/bats.js")
 
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
+app.use(morgan("dev"))
 
 
-//* This GET function serves as a place-holder for the landing page
-// app.get("/", async (req, res) => {
-//   res.send("Welcome, Bat-Nav!");
-// });
+// ============================================ Handling routes/CRUD element ============================================
 
-//* This GET function connects 'index.ejs' via the res.render function
+//* -------------------- Landing page --------------------
 app.get("/", async (req, res) => {
   res.render("index.ejs");
 });
 
-// app.get("/bats/new", (req, res) => {
-//   res.send("This route sends the user a form page!");
-// });
+//* -------------------- Index page --------------------
+app.get("/bats", BatsCtrl.indexBats);
 
-app.get("/bats/new", (req, res) => {
-  res.render("bats/new.ejs");
-});
+//* -------------------- Creating a new entry to the index --------------------
+app.get("/bats/new", BatsCtrl.newBat);
 
-app.post("/bats", async (req, res) => {
-    if (req.body.isLivingInTheCave === "on") {
-      req.body.isLivingInTheCave = true;
-    } else {
-      req.body.isLivingInTheCave = false;
-    }
-    await Bats.create(req.body);
-  res.redirect("/bats/new");
-});
+app.post("/bats", BatsCtrl.addNewBat);
 
+//* -------------------- Viewing an entry in the index --------------------
+app.get("/bats/:batID", BatsCtrl.viewBat);
 
+//* -------------------- Editing an entry in the index --------------------
+app.get("/bats/:batID/edit", BatsCtrl.editBat);
 
+app.put("/bats/:batID", BatsCtrl.addEdittedBat);
+
+//* -------------------- Deleting an entry in the index --------------------
+app.delete("/bats/:batID", BatsCtrl.deleteBat);
 
 
 
 
 
+
+
+
+
+
+
+
+
+// ============================================ Server link ============================================
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");
