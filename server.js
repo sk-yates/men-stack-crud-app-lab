@@ -1,37 +1,57 @@
 // ============================================ Dependencies ============================================
 
-// We begin by loading Express
+
 const express = require("express");
+const app = express();
 
 const dotenv = require("dotenv");
 dotenv.config();
 
-const mongoose = require('mongoose')
-
+const mongoose = require('mongoose');
 const methodOverride = require("method-override");
 const morgan = require("morgan");
+const session = require("express-session");
 
-const app = express();
+const port = process.env.PORT ? process.env.PORT : 3000;
+
+const authController = require("./controllers/auth.js")
+
 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-const Bat = require("./models/bat.js");
-const BatsCtrl = require("./controllers/bats.js")
+const BatsCtrl = require("./controllers/bats.js");
+
+
+// ============================================ Middleware ============================================
 
 app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride("_method"));
-app.use(morgan("dev"))
 
+app.use(methodOverride("_method"));
+
+app.use(morgan("dev"));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // ============================================ Handling routes/CRUD element ============================================
 
+
 //* -------------------- Landing page --------------------
 app.get("/", async (req, res) => {
-  res.render("index.ejs");
+  res.render("index.ejs", {
+    user: req.session.user,
+  });
 });
+
+app.use("/auth", authController);
 
 //* -------------------- Index page --------------------
 app.get("/bats", BatsCtrl.indexBats);
@@ -53,19 +73,8 @@ app.put("/bats/:batID", BatsCtrl.addEdittedBat);
 app.delete("/bats/:batID", BatsCtrl.deleteBat);
 
 
-
-
-
-
-
-
-
-
-
-
-
 // ============================================ Server link ============================================
 
-app.listen(3000, () => {
-  console.log("Listening on port 3000");
+app.listen(port, () => {
+  console.log(`Express app listening on port: ${port}!`);
 });

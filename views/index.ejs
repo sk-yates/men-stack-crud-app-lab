@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bat-Nav: Landing page</title>
-  </head>
-  <body>
-    <h1>Welcome to the Bat-Nav app!</h1>
-    <p>An app for documenting different species of bats and where in the world they call home.</p>
 
-    <a href="/bats">Browse Bats</a>
-  
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bat-Nav: Landing page</title>
+</head>
+
+<body>
+
+  <% if (user) { %>
+    <h1> Welcome back to Bat-Nav, <%= user.username %>. </h1>
+    <p>
+      <a href="/bats">Browse Bats</a>
+      or
+      <a href="/auth/sign-out"> sign-out </a>
+    </p>
+
+    <% } else { %>
+      <h1>Welcome to the Bat-Nav app!</h1>
+      <p>An app for documenting different species of bats and where in the world they call home.</p>
+      <p>
+        <a href="auth/sign-up"> sign-up </a>
+        or
+        <a href="/auth/sign-in"> sign-in </a>
+      </p>
+      <% } %>
+      <!--   -->
+
+
+</body>
+
 </html>
